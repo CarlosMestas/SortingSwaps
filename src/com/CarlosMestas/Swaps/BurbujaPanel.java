@@ -32,37 +32,10 @@ public class BurbujaPanel extends JPanel{
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);    
         g2.setColor( new Color(255,255,255) );
         g2.fill(new Rectangle2D.Double(0,0,getWidth(),getHeight()));                 
-        //pinta numeros y casillas
         if(bNumber!=null)
         for(BoxNumber b:bNumber){
             b.draw(g2);
         }    
-    }
-    
-    public void generar(){       
-        bNumber = new BoxNumber[NUM_BOX];
-        Random rn = new Random();
-        for(int i=0;i<NUM_BOX;i++){
-            int num = rn.nextInt(max - min + 1) + min;
-            System.out.println(num);
-            bNumber[i] = new BoxNumber(num);                
-            bNumber[i].x= 10 + bNumber[i].WIDTH * i;
-            bNumber[i].y = 42 ;
-            bNumber[i].setNumber(String.valueOf(num));        
-        }
-        repaint();
-    }
-    
-    public void generar2(){             
-        bNumber = new BoxNumber[NUM_BOX];
-        for(int i=0;i<NUM_BOX;i++){
-            System.out.println(i);
-            bNumber[i] = new BoxNumber(20-i);                
-            bNumber[i].x = 10 + bNumber[i].WIDTH * i;
-            bNumber[i].y = 42 ;
-            bNumber[i].setNumber(String.valueOf(20-i));        
-        }
-        repaint();
     }
     
     public void generar3(BoxNumber[] array){

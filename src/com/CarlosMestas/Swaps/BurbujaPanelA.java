@@ -17,10 +17,9 @@ public class BurbujaPanelA extends JPanel implements Runnable{
     
     Thread thread;
     
-    private int NUM_BOX                 =       15;
+    
+    private int NUM_BOX                 =       BurbujaFrm.cantNumbers;  
     private Dimension dimension         =       new Dimension(500,128);    
-    private int max                     =       20;
-    private int min                     =       1;
     private BoxNumber[] bNumber;
     
     public BurbujaPanelA(){
@@ -42,39 +41,13 @@ public class BurbujaPanelA extends JPanel implements Runnable{
         
     }
     
-    public void generar(){       
-        bNumber = new BoxNumber[NUM_BOX];
-        Random rn = new Random();
-        for(int i=0;i<NUM_BOX;i++){
-            int num = rn.nextInt(max - min + 1) + min;
-            System.out.println(num);
-            bNumber[i] = new BoxNumber(num);                
-            bNumber[i].x= 10 + bNumber[i].WIDTH * i;
-            bNumber[i].y = 42 ;
-            bNumber[i].setNumber(String.valueOf(num));        
-        }
-        repaint();
-    }
-    
-    public void generar2(){             
-        bNumber = new BoxNumber[NUM_BOX];
-        for(int i=0;i<NUM_BOX;i++){
-            System.out.println(i);
-            bNumber[i] = new BoxNumber(20-i);                
-            bNumber[i].x = 10 + bNumber[i].WIDTH * i;
-            bNumber[i].y = 42 ;
-            bNumber[i].setNumber(String.valueOf(20-i));        
-        }
-        repaint();
-    }
-    
+
     public void generar3(BoxNumber[] array){
         bNumber = array;
         for(int i = 0;i < NUM_BOX;i++){
-            System.out.println(i);               
-            bNumber[i].x = 10 + bNumber[i].WIDTH * i;
-            bNumber[i].y = 42 ;  
-            bNumber[i].setNumber(String.valueOf(bNumber[i].HEIGHT/32));  
+            bNumber[i].x = 10;
+            bNumber[i].y = 10 + bNumber[i].HEIGHT * i ;  
+            bNumber[i].setNumber(String.valueOf(bNumber[i].WIDTH ));  
         }
         repaint();    
     }
@@ -86,17 +59,17 @@ public class BurbujaPanelA extends JPanel implements Runnable{
      
     public class BurbujaWorker extends SwingWorker<Void, Void> {
 
-        private int SPEED = 5;      
+        private int SPEED = 1;      
         
         @Override
         protected Void doInBackground() throws Exception {
-        
+    
         int i, j;
         BoxNumber aux;
         for(i=0;i<bNumber.length-1;i++)
             for(j=0;j<bNumber.length-i-1;j++)
                 if(bNumber[j+1].getValue()<bNumber[j].getValue()){
-                    aux=bNumber[j+1];
+                    aux = bNumber[j+1];
                     //animar movimiento
                     bNumber[j].colorBg = new Color(104,169,213);
                     bNumber[j+1].colorBg = new Color(104,169,213);
@@ -107,15 +80,19 @@ public class BurbujaPanelA extends JPanel implements Runnable{
                     bNumber[j+1].colorBg = new Color(80,172,178);
                     bNumber[j+1]=bNumber[j];
                     bNumber[j]=aux;
-                }         
+                }
+            BurbujaFrm.jButton1.setEnabled(true);
+            BurbujaFrm.jButton2.setEnabled(true);
+            BurbujaFrm.jButton3.setEnabled(true);
+            BurbujaFrm.jButton4.setEnabled(true);        
             return null;
         }
         
         private void girar(int a , int b){
 
-            for(int i=0; i< bNumber[0].WIDTH;i++){
-                 bNumber[a].x += 1;
-                 bNumber[b].x -= 1;
+            for(int i=0; i < bNumber[0].HEIGHT;i++){
+                bNumber[a].y += 1;
+                bNumber[b].y -= 1;
                  try {
                     Thread.sleep(SPEED);
                  } catch (InterruptedException e) {}
@@ -135,6 +112,7 @@ public class BurbujaPanelA extends JPanel implements Runnable{
     @Override
     public void run() {
         ordenar();
+
     }
     
     public void stop(){

@@ -19,42 +19,34 @@ public class BoxNumber {
         
     private Font font           =       new Font("Tahoma", Font.BOLD, 12); 
     private String number       =       "0";
-    public int WIDTH            =       24;
-    public int HEIGHT           =       32;    
+    public int WIDTH            =       360 / BurbujaFrm.maxRandom;
+    public int HEIGHT           =       630 / BurbujaFrm.cantNumbers;  
+
     public int x;
     public int y;    
     Color colorBg;
     private Dimension dimensionText;
     private Color[] color       = {     new Color(80,172,178)};
 
-    public BoxNumber(){
+    public BoxNumber(int width){
         Random rn = new Random();        
         colorBg =  color[rn.nextInt(color.length)];
-    }
-    
-    public BoxNumber(int height){
-        Random rn = new Random();        
-        colorBg =  color[rn.nextInt(color.length)];
-        this.HEIGHT = this.HEIGHT * height;     
+        this.WIDTH = this.WIDTH * width;
     }
     
     public void draw(Graphics2D g2){     
         Polygon boxPolygon = new Polygon();
-        boxPolygon.addPoint( x, 650 - HEIGHT );  
-        boxPolygon.addPoint( x + WIDTH, 650 - HEIGHT );  
-        boxPolygon.addPoint( x + WIDTH, 650 );  
-        boxPolygon.addPoint( x, 650 ); 
+        boxPolygon.addPoint( x, y );  
+        boxPolygon.addPoint( x + WIDTH, y );  
+        
+        boxPolygon.addPoint( x + WIDTH, y + HEIGHT ); 
 
+        boxPolygon.addPoint( x, y + HEIGHT );  
         g2.setColor( colorBg );
         g2.fillPolygon( boxPolygon );
         g2.setColor( new Color(0,0,0) );
         g2.drawPolygon( boxPolygon );
-        
-        if(getNumber().length()>0){            
-            g2.setFont( font ); 
-            g2.drawString( getNumber(), x+(WIDTH/2-dimensionText.width/2), 640);        
-        }
-        
+  
     }
 
     public String getNumber() {
